@@ -263,7 +263,7 @@
             "code": "241",
             "title": "Christian ethics",
             "notes": "Moral theology, Conscience, Sins & vices, Virtues",
-            "enabled": false
+            "enabled": true
           },
           {
             "code": "242",

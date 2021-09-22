@@ -6,10 +6,5 @@ export const defaultTheme = createTheme({
         background:{
             default: blueGrey['A100']
         }
-    },
-    typography: {
-        body1: {
-            fontWeight: 500,
-        },
     }
 });
