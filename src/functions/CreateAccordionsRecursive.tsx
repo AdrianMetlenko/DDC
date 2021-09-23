@@ -36,7 +36,7 @@ export function createAccordion(code: ddcCode, expanded: string | null, setExpan
                     setExpanded(code.code)
                 }
             }}
-            style={{background: alpha(theme.palette.background.paper, matchDepth/8)}}>
+            style={{background: alpha(theme.palette.background.paper, 0.4)}}>
             <AccordionSummary expandIcon={<ExpandMore/>} style={{display: 'flex'}}>
                 <Typography style={{color: color, flex: 1, paddingRight: '5%', fontWeight: 'bold'}}>{code.code}</Typography>
                 <div style={{flex: 10}}>
@@ -53,7 +53,7 @@ export function createAccordion(code: ddcCode, expanded: string | null, setExpan
             elevation={2}
             disabled={!code.enabled}
             expanded={expanded === code.code}
-            style={{background: alpha(theme.palette.background.paper, matchDepth/8)}}
+            style={{background: alpha(theme.palette.background.paper, 0.3)}}
         >
             <AccordionSummary style={{display: 'flex'}}>
                 <Typography style={{flex: 1, paddingRight: '5%', fontWeight: 'bold'}}>{code.code}</Typography>
