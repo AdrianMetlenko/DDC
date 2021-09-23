@@ -1,71 +1,15 @@
-import React, {useContext, useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {
     CssBaseline,
-    TextField, Autocomplete, Paper, PaletteMode, createTheme, ThemeProvider, PaletteColorOptions, ThemeOptions
+    TextField, Autocomplete, Paper, PaletteMode, createTheme, ThemeProvider
 } from '@mui/material';
 import ddcJson from './ddc.json'
-import {amber, blue, deepOrange, grey, indigo} from "@mui/material/colors";
 import {Helmet} from 'react-helmet'
 import {ddcCode, searchOption} from "./types/types";
 import {flatten} from "./functions/FlattenSearchOptions";
 import {createAccordion} from "./functions/CreateAccordionsRecursive";
 import TopBar from "./components/TopBar";
-
-const dark_mode = [
-    '#E6EEF8',
-    '#A1A5AB',
-    '#272C4A',
-    '#222845',
-    '#1A2039'
-]
-
-const light_mode = [
-    '#FFFFFF',
-    '#E6ECF0',
-    '#657786',
-    '#66757F',
-    '#14171A'
-]
-
-const getDesignTokens = (mode: PaletteMode) => ({
-    palette: {
-        mode,
-        ...(mode === 'light'
-            ? {
-                // palette values for light mode
-                primary: {
-                    main: light_mode[2]
-                },
-                divider: light_mode[4],
-                background: {
-                    default: light_mode[3],
-                    paper: light_mode[1],
-                },
-                text: {
-                    primary: light_mode[4],
-                    secondary: light_mode[3],
-                },
-            }
-            : {
-                // palette values for dark mode
-                primary: {
-                    main: dark_mode[2]
-                },
-                divider: dark_mode[4],
-                background: {
-                    default: dark_mode[3],
-                    paper: dark_mode[2],
-                },
-                text: {
-                    primary: dark_mode[1],
-                    secondary: dark_mode[2],
-                },
-            }),
-    },
-} as ThemeOptions);
-
-const ColorModeContext = React.createContext({toggleColorMode: () => {}})
-export const useColorModeContext = () => useContext(ColorModeContext);
+import {ColorModeContext, getDesignTokens} from "./Theme";
 
 function App() {
     const [mode, setMode] = useState<PaletteMode>('light');
@@ -98,10 +42,11 @@ function App() {
     return (
         <ColorModeContext.Provider value={colorMode}>
             <ThemeProvider theme={theme}>
-                <TopBar/>
+                <TopBar height={70}/>
                 <div style={{
                     background: theme.palette.background.default,
-                    height: '100vh',
+                    marginTop: 70,
+                    height: 'calc(100vh - 80px)',
                     display: 'flex',
                     alignItems: "center",
                     flexDirection: "column"

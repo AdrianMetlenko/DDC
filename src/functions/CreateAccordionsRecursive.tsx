@@ -1,26 +1,7 @@
 import {ddcCode} from "../types/types";
-import {Accordion, AccordionDetails, AccordionSummary, Typography} from "@mui/material";
+import {Accordion, AccordionDetails, AccordionSummary, alpha, Typography} from "@mui/material";
 import {ExpandMore} from "@mui/icons-material";
 import React from "react";
-import {grey} from "@mui/material/colors";
-
-const colors = (depth: number) => {
-    const color = grey
-    switch (depth) {
-        case 1:
-            return color[50]
-        case 2:
-            return color[100]
-        case 3:
-            return color[300]
-        case 4:
-            return color[400]
-        case 5:
-            return color[500]
-        case 6:
-            return color[600]
-    }
-}
 
 export function createAccordion(code: ddcCode, expanded: string | null, setExpanded: any, matchDepth: number, theme: any) {
 
@@ -32,8 +13,7 @@ export function createAccordion(code: ddcCode, expanded: string | null, setExpan
     if (expanded) {
         expand = expanded.slice(0, matchDepth) === match
     }
-    const color = expand ? theme.palette.error.main : theme.palette.text.main
-
+    const color = expand ? theme.palette.secondary.dark : theme.palette.text.main
 
     if (code.children) {
         return <Accordion
@@ -56,9 +36,9 @@ export function createAccordion(code: ddcCode, expanded: string | null, setExpan
                     setExpanded(code.code)
                 }
             }}
-            style={{background: colors(matchDepth)}}>
+            style={{background: alpha(theme.palette.background.paper, matchDepth/8)}}>
             <AccordionSummary expandIcon={<ExpandMore/>} style={{display: 'flex'}}>
-                <Typography style={{flex: 1, paddingRight: '5%', fontWeight: 'bold'}}>{code.code}</Typography>
+                <Typography style={{color: color, flex: 1, paddingRight: '5%', fontWeight: 'bold'}}>{code.code}</Typography>
                 <div style={{flex: 10}}>
                     <Typography style={{color: color, fontWeight: 'bold'}}>{code.title}</Typography>
                     <Typography variant='caption'>{code.notes}</Typography>
@@ -73,7 +53,7 @@ export function createAccordion(code: ddcCode, expanded: string | null, setExpan
             elevation={2}
             disabled={!code.enabled}
             expanded={expanded === code.code}
-            style={{background: colors(matchDepth)}}
+            style={{background: alpha(theme.palette.background.paper, matchDepth/8)}}
         >
             <AccordionSummary style={{display: 'flex'}}>
                 <Typography style={{flex: 1, paddingRight: '5%', fontWeight: 'bold'}}>{code.code}</Typography>
