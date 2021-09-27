@@ -7,9 +7,9 @@ function TopBar({height}: {height: number}) {
     const theme = useTheme()
     return (
         <AppBar position="fixed" elevation={5} sx={{height: height, justifyContent: 'center'}}>
-            <Toolbar style={{width: '100%'}}>
+            <Toolbar sx={{width: '100%'}}>
                 <div style={{flex: 1}}/>
-                <Typography variant="h5" style={{color: theme.palette.primary.contrastText, flex: 1, textAlign: 'center'}}>
+                <Typography variant="h5" sx={{flex: 1, textAlign: 'center'}}>
                     Dewey Decimal Classification
                 </Typography>
                 <div style={{flex: 1, display: 'flex'}}>

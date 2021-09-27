@@ -13,11 +13,11 @@ export function createAccordion(code: ddcCode, expanded: string | null, setExpan
     if (expanded) {
         expand = expanded.slice(0, matchDepth) === match
     }
-    const color = expand ? theme.palette.secondary.dark : theme.palette.text.main
+    const color = expand ? theme.palette.primary.main : theme.palette.text.primary
 
     if (code.children) {
         return <Accordion
-            elevation={2}
+            elevation={code.enabled ? 4 : 0}
             disabled={!code.enabled}
             expanded={expand}
             onChange={() => {
@@ -30,18 +30,24 @@ export function createAccordion(code: ddcCode, expanded: string | null, setExpan
                         while (levelUp.length < 3) {
                             levelUp = levelUp + '0'
                         }
-                        setExpanded(levelUp)
+                        if(levelUp === '000'){
+                            setExpanded('200')
+                        } else {
+                            setExpanded(levelUp)
+                        }
+
                     }
                 } else {
                     setExpanded(code.code)
                 }
             }}
-            style={{background: alpha(theme.palette.background.paper, 0.4)}}>
-            <AccordionSummary expandIcon={<ExpandMore/>} style={{display: 'flex'}}>
-                <Typography style={{color: color, flex: 1, paddingRight: '5%', fontWeight: 'bold'}}>{code.code}</Typography>
+            sx={{bgcolor: 'background.default'}}
+        >
+            <AccordionSummary expandIcon={<ExpandMore/>} sx={{display: 'flex', ml: 4}}>
+                <Typography sx={{color: color, flex: 1, pr: '5%', fontWeight: 'bold'}}>{code.code}</Typography>
                 <div style={{flex: 10}}>
-                    <Typography style={{color: color, fontWeight: 'bold'}}>{code.title}</Typography>
-                    <Typography variant='caption'>{code.notes}</Typography>
+                    <Typography sx={{color: color, fontWeight: 'bold'}}>{code.title}</Typography>
+                    <Typography variant='caption' sx={{color: 'text.secondary'}}>{code.notes}</Typography>
                 </div>
             </AccordionSummary>
             <AccordionDetails>
@@ -50,16 +56,16 @@ export function createAccordion(code: ddcCode, expanded: string | null, setExpan
         </Accordion>
     } else {
         return <Accordion
-            elevation={2}
+            elevation={code.enabled ? 4 : 0}
             disabled={!code.enabled}
             expanded={expanded === code.code}
-            style={{background: alpha(theme.palette.background.paper, 0.3)}}
+            sx={{bgcolor: 'background.default'}}
         >
-            <AccordionSummary style={{display: 'flex'}}>
+            <AccordionSummary sx={{display: 'flex', ml: 4}}>
                 <Typography style={{flex: 1, paddingRight: '5%', fontWeight: 'bold'}}>{code.code}</Typography>
                 <div style={{flex: 10}}>
                     <Typography style={{color: color, fontWeight: 'bold'}}>{code.title}</Typography>
-                    <Typography variant='caption'>{code.notes}</Typography>
+                    <Typography variant='caption' sx={{color: 'text.secondary'}}>{code.notes}</Typography>
                 </div>
             </AccordionSummary>
         </Accordion>

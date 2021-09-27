@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {
     CssBaseline,
-    TextField, Autocomplete, Paper, PaletteMode, createTheme, ThemeProvider
+    TextField, Autocomplete, Paper, PaletteMode, createTheme, ThemeProvider, Box
 } from '@mui/material';
 import ddcJson from './ddc.json'
 import {Helmet} from 'react-helmet'
@@ -13,6 +13,7 @@ import {ColorModeContext, getDesignTokens} from "./Theme";
 
 function App() {
     const [mode, setMode] = useState<PaletteMode>('light');
+    // const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
     const colorMode = useMemo(
         () => ({
@@ -43,24 +44,23 @@ function App() {
         <ColorModeContext.Provider value={colorMode}>
             <ThemeProvider theme={theme}>
                 <TopBar height={70}/>
-                <div style={{
-                    background: theme.palette.background.default,
-                    marginTop: 70,
-                    height: 'calc(100vh - 80px)',
+                <Box sx={{
+                    mt: 7,
                     display: 'flex',
                     alignItems: "center",
-                    flexDirection: "column"
+                    flexDirection: "column",
+                    bgcolor: 'background.paper'
                 }}>
                     <Helmet>
                         <title>{"DDC Index"}</title>
                     </Helmet>
                     <CssBaseline/>
 
-                    <div style={{
+                    <Box sx={{
                         textAlign: 'center',
-                        paddingLeft: 20,
-                        paddingTop: 20,
-                        paddingRight: 20,
+                        paddingLeft: 2,
+                        paddingTop: 2,
+                        paddingRight: 2,
                         width: '100%',
                         maxWidth: 900
                     }}>
@@ -79,11 +79,11 @@ function App() {
                                 renderInput={(params) => <TextField {...params} variant='outlined' label="Search..."/>}
                             />
                         </Paper>
-                    </div>
+                    </Box>
                     <div style={{maxWidth: 900, padding: 20, width: '100%'}}>
                         {ddc?.map(code => createAccordion(code, expanded, setExpanded, 1, theme))}
                     </div>
-                </div>
+                </Box>
             </ThemeProvider>
         </ColorModeContext.Provider>
     );
