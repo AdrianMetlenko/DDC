@@ -49,7 +49,7 @@ function App() {
                     display: 'flex',
                     alignItems: "center",
                     flexDirection: "column",
-                    bgcolor: 'background.paper'
+                    bgcolor: 'background.default'
                 }}>
                     <Helmet>
                         <title>{"DDC Index"}</title>
@@ -64,7 +64,7 @@ function App() {
                         width: '100%',
                         maxWidth: 900
                     }}>
-                        <Paper style={{textAlign: 'left', marginBottom: 10, width: '100%', padding: 15}}>
+                        <Box sx={{textAlign: 'left', marginBottom: 1, width: '100%', bgcolor: 'background.paper'}}>
                             <Autocomplete
                                 options={searchOptions}
                                 getOptionDisabled={(option) => option.disabled}
@@ -78,7 +78,7 @@ function App() {
                                 }}
                                 renderInput={(params) => <TextField {...params} variant='outlined' label="Search..."/>}
                             />
-                        </Paper>
+                        </Box>
                     </Box>
                     <div style={{maxWidth: 900, padding: 20, width: '100%'}}>
                         {ddc?.map(code => createAccordion(code, expanded, setExpanded, 1, theme))}

@@ -4,6 +4,7 @@ import {
     PaletteMode, ThemeOptions
 } from '@mui/material';
 import {blue, blueDark, grey} from "./theme/MUIColours";
+import {blueGrey} from "@mui/material/colors";
 
 export const ColorModeContext = React.createContext({
     toggleColorMode: () => {
@@ -19,13 +20,13 @@ export const getDesignTokens = (mode: PaletteMode) => ({
                 main: blue[400],
             }),
         },
-        divider: mode === 'dark' ? blueDark[700] : grey[200],
+        // divider: mode === 'dark' ? blueDark[700] : grey[200],
         primaryDark: blueDark,
         mode,
         ...(mode === 'dark' && {
             background: {
-                default: blueDark[800],
-                paper: blueDark[900],
+                default: blueDark[900],
+                paper: blueDark[800],
             },
         }),
         ...(mode === 'light' && {
@@ -40,10 +41,16 @@ export const getDesignTokens = (mode: PaletteMode) => ({
                 secondary: grey[500],
             },
         }),
+        ...(mode === 'light' && {
+            background: {
+                default: blueGrey['50'],
+                paper: '#FFFFFF'
+            },
+        }),
         grey,
     },
     shape: {
-        borderRadius: 10,
+        borderRadius: 0,
     },
     spacing: 10,
 } as ThemeOptions);
