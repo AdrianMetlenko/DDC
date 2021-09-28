@@ -257,6 +257,7 @@
       {
         "code": "240",
         "title": "Christian moral and devotional theology",
+        "notes": "Writings of the Holy Fathers",
         "enabled": true,
         "children": [
           {
@@ -537,7 +538,7 @@
       {
         "code": "280",
         "title": "Christian denominations",
-        "enabled": false
+        "enabled": true
       },
       {
         "code": "290",

@@ -3,6 +3,7 @@ import {Accordion, AccordionDetails, AccordionSummary, alpha, Typography} from "
 import {ExpandMore} from "@mui/icons-material";
 import React from "react";
 import {cyan, deepOrange, indigo, lime, orange, purple} from "@mui/material/colors";
+import {blueDark} from "../theme/MUIColours";
 
 const colors = (depth: number) => {
     switch (depth) {
@@ -13,9 +14,12 @@ const colors = (depth: number) => {
         case 3:
             return orange
         case 4:
+        case 5:
             return indigo
-        default:
+        case 6:
             return deepOrange
+        default:
+            return blueDark
     }
 }
 
@@ -30,13 +34,13 @@ export function createAccordion(code: ddcCode, expanded: string | null, setExpan
     if (expanded) {
         expand = expanded.slice(0, matchDepth) === match
     }
-    const selectedLineColor = colors(matchDepth)[theme.palette.mode === 'light' ? 'A700' : '500']
+    const selectedLineColor = colors(matchDepth)[theme.palette.mode === 'light' ? '500' : '400']
     const selectedTextColor = expand ? selectedLineColor : theme.palette.text.primary
 
     if (code.children) {
         return <Accordion
             disableGutters
-            elevation={code.enabled ? 0 : 0}
+            elevation={code.enabled ? 3 : 0}
             disabled={!code.enabled}
             expanded={expand}
             onChange={() => {
@@ -61,26 +65,25 @@ export function createAccordion(code: ddcCode, expanded: string | null, setExpan
                 }
             }}
             sx={{
-                bgcolor: 'background.paper',
+                pl:1,
                 borderLeft: expand ? 3 : 0,
+                borderTop: expand ? 3 : 0,
                 borderColor: selectedLineColor,
                 '&:before': {
                     display: 'none',
-                },
-                '&.Mui-disabled': {
-                    color: 'text.disabled',
-                    bgcolor: 'background.paper',
-                },
-                '&:hover': {
-                    bgcolor: (!expand && code.enabled) ? 'background.default' : 'background.paper',
-                },
+                }
             }}
         >
-            <AccordionSummary expandIcon={<ExpandMore/>} sx={{display: 'flex', ml: 4, borderRadius: 0}}>
-                <Typography sx={{color: selectedTextColor, flex: 1, pr: '5%', fontWeight: 'bold'}}>{code.code}</Typography>
+            <AccordionSummary expandIcon={<ExpandMore sx={{ color: selectedTextColor }}/>} sx={{display: 'flex', ml: 4, borderRadius: 0}}>
+                <Typography sx={{
+                    color: selectedTextColor,
+                    flex: 1,
+                    pr: '5%',
+                    fontWeight: 'bold'
+                }}>{code.code}</Typography>
                 <div style={{flex: 10}}>
-                    <Typography sx={{color: selectedTextColor, fontWeight: 'bold'}}>{code.title}</Typography>
-                    <Typography variant='caption' sx={{color: 'text.secondary'}}>{code.notes}</Typography>
+                    <Typography sx={{fontWeight: 'bold', color: selectedTextColor }}>{code.title}</Typography>
+                    <Typography variant='caption'>{code.notes}</Typography>
                 </div>
             </AccordionSummary>
             <AccordionDetails>
@@ -90,31 +93,32 @@ export function createAccordion(code: ddcCode, expanded: string | null, setExpan
     } else {
         return <Accordion
             disableGutters
-            elevation={0}
+            elevation={code.enabled ? 3 : 0}
             disabled={!code.enabled}
             expanded={expanded === code.code}
             sx={{
-                bgcolor: 'background.paper',
+                pl:1,
                 borderLeft: expanded === code.code ? 3 : 0,
+                borderTop: expanded === code.code ? 3 : 0,
                 borderColor: selectedLineColor,
-                '&.Mui-disabled': {
-                    color: 'text.disabled',
-                    bgcolor: 'background.paper',
-                },
-                '&:hover': {
-                    bgcolor: (!(expanded === code.code) && code.enabled) ? 'background.default' : 'background.paper',
-                },
                 '&:before': {
                     display: 'none',
-                }
+                },
+                color: selectedTextColor,
+                fontWeight: 'bold',
             }}
             onChange={() => setExpanded(code.code)}
         >
-            <AccordionSummary sx={{display: 'flex', ml: 4, borderRadius: 0}}>
-                <Typography style={{color: selectedTextColor, flex: 1, paddingRight: '5%', fontWeight: 'bold'}}>{code.code}</Typography>
+            <AccordionSummary sx={{display: 'flex', ml: 4}}>
+                <Typography sx={{
+                    flex: 1,
+                    pr: '5%',
+                    fontWeight: 'bold',
+                    color: selectedTextColor
+                }}>{code.code}</Typography>
                 <div style={{flex: 10}}>
-                    <Typography style={{color: selectedTextColor, fontWeight: 'bold'}}>{code.title}</Typography>
-                    <Typography variant='caption' sx={{color: 'text.secondary'}}>{code.notes}</Typography>
+                    <Typography sx={{fontWeight: 'bold', color: selectedTextColor }}>{code.title}</Typography>
+                    <Typography variant='caption'>{code.notes}</Typography>
                 </div>
             </AccordionSummary>
         </Accordion>
