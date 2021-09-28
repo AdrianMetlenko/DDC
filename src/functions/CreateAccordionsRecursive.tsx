@@ -2,8 +2,8 @@ import {ddcCode} from "../types/types";
 import {Accordion, AccordionDetails, AccordionSummary, alpha, Typography} from "@mui/material";
 import {ExpandMore} from "@mui/icons-material";
 import React from "react";
-import {cyan, deepOrange, indigo, lime, orange, purple} from "@mui/material/colors";
-import {blueDark} from "../theme/MUIColours";
+import {blueGrey, cyan, deepOrange, indigo, lime, orange, purple} from "@mui/material/colors";
+import {blueDark, grey} from "../theme/MUIColours";
 
 const colors = (depth: number) => {
     switch (depth) {
@@ -40,7 +40,7 @@ export function createAccordion(code: ddcCode, expanded: string | null, setExpan
     if (code.children) {
         return <Accordion
             disableGutters
-            elevation={code.enabled ? 3 : 0}
+            elevation={code.enabled ? 3 : 1}
             disabled={!code.enabled}
             expanded={expand}
             onChange={() => {
@@ -71,7 +71,11 @@ export function createAccordion(code: ddcCode, expanded: string | null, setExpan
                 borderColor: selectedLineColor,
                 '&:before': {
                     display: 'none',
-                }
+                },
+                '&.Mui-disabled': {
+                    bgcolor: 'background.paper',
+                },
+
             }}
         >
             <AccordionSummary expandIcon={<ExpandMore sx={{ color: selectedTextColor }}/>} sx={{display: 'flex', ml: 4, borderRadius: 0}}>
@@ -83,7 +87,7 @@ export function createAccordion(code: ddcCode, expanded: string | null, setExpan
                 }}>{code.code}</Typography>
                 <div style={{flex: 10}}>
                     <Typography sx={{fontWeight: 'bold', color: selectedTextColor }}>{code.title}</Typography>
-                    <Typography variant='caption'>{code.notes}</Typography>
+                    <Typography sx={{color: selectedTextColor }} variant='caption'>{code.notes}</Typography>
                 </div>
             </AccordionSummary>
             <AccordionDetails>
@@ -93,7 +97,7 @@ export function createAccordion(code: ddcCode, expanded: string | null, setExpan
     } else {
         return <Accordion
             disableGutters
-            elevation={code.enabled ? 3 : 0}
+            elevation={code.enabled ? 3 : 1}
             disabled={!code.enabled}
             expanded={expanded === code.code}
             sx={{
@@ -106,6 +110,9 @@ export function createAccordion(code: ddcCode, expanded: string | null, setExpan
                 },
                 color: selectedTextColor,
                 fontWeight: 'bold',
+                '&.Mui-disabled': {
+                    bgcolor: 'background.paper'
+                },
             }}
             onChange={() => setExpanded(code.code)}
         >
@@ -118,7 +125,7 @@ export function createAccordion(code: ddcCode, expanded: string | null, setExpan
                 }}>{code.code}</Typography>
                 <div style={{flex: 10}}>
                     <Typography sx={{fontWeight: 'bold', color: selectedTextColor }}>{code.title}</Typography>
-                    <Typography variant='caption'>{code.notes}</Typography>
+                    <Typography sx={{color: selectedTextColor }}variant='caption'>{code.notes}</Typography>
                 </div>
             </AccordionSummary>
         </Accordion>
