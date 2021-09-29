@@ -11,4 +11,5 @@ export interface searchOption {
     label: string,
     group: string
     disabled: boolean
+    title: string
 }

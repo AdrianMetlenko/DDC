@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {
     CssBaseline,
-    TextField, Autocomplete, Paper, PaletteMode, createTheme, ThemeProvider, Box
+    PaletteMode, createTheme, ThemeProvider, Box
 } from '@mui/material';
 import ddcJson from './ddc.json'
 import {Helmet} from 'react-helmet'
@@ -10,6 +10,8 @@ import {flatten} from "./functions/FlattenSearchOptions";
 import {createAccordion} from "./functions/CreateAccordionsRecursive";
 import TopBar from "./components/TopBar";
 import {ColorModeContext, getDesignTokens} from "./Theme";
+import SearchBar from "./components/SearchBar";
+import {createBreadcrumb} from "./functions/CreateBreadcrumb";
 
 function App() {
     const [mode, setMode] = useState<PaletteMode>('light');
@@ -33,6 +35,7 @@ function App() {
     const [expanded, setExpanded] = useState<string | null>('200');
     const [ddc, setDDC] = useState<ddcCode[]>([]);
     const [searchOptions, setSearchOptions] = useState<searchOption[]>([]);
+    const [openCodes, setOpenCodes] = useState<{ code: string, title: string }[]>([]);
 
     useEffect(() => {
         setDDC(ddcJson)
@@ -40,12 +43,21 @@ function App() {
         setSearchOptions(flatJson)
     }, []);
 
+    useEffect(() => {
+        if (expanded) {
+            setOpenCodes(createBreadcrumb(expanded, searchOptions).reverse())
+        } else {
+            setOpenCodes([])
+        }
+    }, [expanded, searchOptions]);
+
     return (
         <ColorModeContext.Provider value={colorMode}>
             <ThemeProvider theme={theme}>
-                <TopBar height={70}/>
+                <TopBar height={70} openCodes={openCodes} setExpanded={setExpanded}/>
+                <SearchBar height={100} searchOptions={searchOptions} setExpanded={setExpanded}/>
                 <Box sx={{
-                    mt: 7,
+                    mt: 17,
                     display: 'flex',
                     alignItems: "center",
                     flexDirection: "column",
@@ -55,31 +67,6 @@ function App() {
                         <title>{"DDC Index"}</title>
                     </Helmet>
                     <CssBaseline/>
-
-                    <Box sx={{
-                        textAlign: 'center',
-                        paddingLeft: 2,
-                        paddingTop: 2,
-                        paddingRight: 2,
-                        width: '100%',
-                        maxWidth: 900
-                    }}>
-                        <Box sx={{textAlign: 'left', marginBottom: 1, width: '100%', bgcolor: 'background.paper'}}>
-                            <Autocomplete
-                                options={searchOptions}
-                                getOptionDisabled={(option) => option.disabled}
-                                groupBy={(option) => option.group}
-                                onChange={(event, newValue) => {
-                                    if (newValue) {
-                                        setExpanded(newValue.id)
-                                    } else {
-                                        setExpanded(newValue)
-                                    }
-                                }}
-                                renderInput={(params) => <TextField {...params} variant='outlined' label="Search..."/>}
-                            />
-                        </Box>
-                    </Box>
                     <div style={{maxWidth: 900, padding: 20, width: '100%'}}>
                         {ddc?.map(code => createAccordion(code, expanded, setExpanded, 1, theme))}
                     </div>

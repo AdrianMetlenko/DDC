@@ -1,9 +1,9 @@
 import {ddcCode} from "../types/types";
-import {Accordion, AccordionDetails, AccordionSummary, alpha, Typography} from "@mui/material";
+import {Accordion, AccordionDetails, AccordionSummary, Typography} from "@mui/material";
 import {ExpandMore} from "@mui/icons-material";
 import React from "react";
-import {blueGrey, cyan, deepOrange, indigo, lime, orange, purple} from "@mui/material/colors";
-import {blueDark, grey} from "../theme/MUIColours";
+import {cyan, deepOrange, indigo, orange, purple} from "@mui/material/colors";
+import {blueDark} from "../theme/MUIColours";
 
 const colors = (depth: number) => {
     switch (depth) {
@@ -23,7 +23,6 @@ const colors = (depth: number) => {
     }
 }
 
-
 export function createAccordion(code: ddcCode, expanded: string | null, setExpanded: any, matchDepth: number, theme: any) {
 
     if (code.code.slice(0, matchDepth).slice(-1) === '.') {
@@ -34,6 +33,7 @@ export function createAccordion(code: ddcCode, expanded: string | null, setExpan
     if (expanded) {
         expand = expanded.slice(0, matchDepth) === match
     }
+
     const selectedLineColor = colors(matchDepth)[theme.palette.mode === 'light' ? '500' : '400']
     const selectedTextColor = expand ? selectedLineColor : theme.palette.text.primary
 
@@ -54,7 +54,7 @@ export function createAccordion(code: ddcCode, expanded: string | null, setExpan
                             levelUp = levelUp + '0'
                         }
                         if (levelUp === '000') {
-                            setExpanded('200')
+                            setExpanded(null)
                         } else {
                             setExpanded(levelUp)
                         }
